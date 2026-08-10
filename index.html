@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxia 3D</title>
     <style>
-        /* Hace que la animación ocupe toda la pantalla de fondo */
+        /* Hace que la animación ocupe toda la pantalla de fondo sin bordes */
         body { 
             margin: 0; 
             overflow: hidden; 
@@ -15,15 +15,15 @@
             display: block; 
         }
     </style>
-    <!-- Servidores estables alternativos para evitar bloqueos de red -->
+    <!-- Servidores estables de cdnjs para cargar el motor 3D sin bloqueos de red -->
     <script src="https://cloudflare.com"></script>
     <script src="https://cloudflare.com"></script>
 </head>
 <body>
-    <!-- Lienzo WebGL -->
+    <!-- El lienzo WebGL donde Three.js dibujará las estrellas -->
     <canvas class="webgl"></canvas>
     
-    <!-- Archivo JavaScript local de la galaxia -->
-    <script src="app.js"></script>
+    <!-- El truco del ?v=2 rompe la caché vieja del navegador y fuerza el código nuevo -->
+    <script src="app.js?v=2"></script>
 </body>
 </html>
