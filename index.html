@@ -15,12 +15,16 @@
             display: block; 
         }
     </style>
+    <!-- Cargamos Three.js directamente desde internet de forma rápida -->
+    <script src="https://cloudflare.com"></script>
+    <!-- Cargamos los controles de órbita para poder movernos por el espacio -->
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body>
-    <!-- El lienzo donde Three.js dibujará la galaxia -->
+    <!-- El lienzo donde se dibuja la galaxia -->
     <canvas class="webgl"></canvas>
     
-    <!-- Conexión con tu archivo de JavaScript -->
-    <script type="module" src="/app.js"></script>
+    <!-- Conexión directa con tu script de JavaScript -->
+    <script src="/app.js"></script>
 </body>
 </html>
