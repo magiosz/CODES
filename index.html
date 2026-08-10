@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxia 3D</title>
     <style>
-        /* Elimina los bordes y hace que la animación ocupe toda la pantalla */
         body { 
             margin: 0; 
             overflow: hidden; 
@@ -15,15 +14,14 @@
             display: block; 
         }
     </style>
-    <!-- Librerías de Three.js cargadas directamente desde internet -->
+    <!-- Cargamos las librerías oficiales desde internet -->
     <script src="https://cloudflare.com"></script>
     <script src="https://jsdelivr.net"></script>
 </head>
 <body>
-    <!-- El lienzo donde se dibuja la galaxia -->
     <canvas class="webgl"></canvas>
     
-    <!-- Ruta corregida sin la barra diagonal inicial -->
+    <!-- Script limpio sin "type=module" para evitar bloqueos del navegador -->
     <script src="app.js"></script>
 </body>
 </html>

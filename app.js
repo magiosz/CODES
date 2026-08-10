@@ -30,7 +30,6 @@ for (let i = 0; i < parameters.count; i++) {
     const spinAngle = radius * parameters.spin;
     const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2;
 
-    // Dispersión matemática de las estrellas
     const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
     const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
     const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
@@ -39,7 +38,6 @@ for (let i = 0; i < parameters.count; i++) {
     positions[i3 + 1] = randomY;
     positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
 
-    // Mezcla de colores (Degradado centro-afuera)
     const mixedColor = colorInside.clone();
     mixedColor.lerp(colorOutside, radius / parameters.radius);
 
@@ -66,14 +64,14 @@ scene.add(galaxy);
 // 5. Cámara y Renderizador
 const sizes = { width: window.innerWidth, height: window.innerHeight };
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.set(0, 4, 6);
+camera.position.set(0, 5, 8);
 scene.add(camera);
 
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// 6. Controles de Órbita (Moverse con el ratón)
+// 6. Controles de Órbita (Moverse con el ratón usando la librería global)
 const controls = new THREE.OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
@@ -83,10 +81,7 @@ const clock = new THREE.Clock();
 const tick = () => {
     const elapsedTime = clock.getElapsedTime();
     
-    // Rotación automática lenta
     galaxy.rotation.y = elapsedTime * 0.05; 
-
-    // Actualiza los movimientos del ratón
     controls.update();
 
     renderer.render(scene, camera);
@@ -95,7 +90,6 @@ const tick = () => {
 
 tick();
 
-// Ajuste si cambia el tamaño de pantalla
 window.addEventListener('resize', () => {
     sizes.width = window.innerWidth;
     sizes.height = window.innerHeight;
