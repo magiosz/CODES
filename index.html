@@ -8,18 +8,15 @@
         body { margin: 0; overflow: hidden; background-color: #000; }
         canvas { display: block; }
     </style>
-    <!-- Cargamos Three.js desde un script alternativo de respaldo directo -->
-    <script src="https://jsdelivr.net"></script>
-    <script src="https://jsdelivr.net"></script>
+    <!-- Leemos tus propios archivos cargados de forma física -->
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
 </head>
 <body>
     <canvas class="webgl"></canvas>
+    
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            if (typeof THREE === 'undefined') {
-                console.error("El navegador sigue bloqueando las librerías externas.");
-                return;
-            }
             const canvas = document.querySelector('canvas.webgl');
             const scene = new THREE.Scene();
 
@@ -95,3 +92,4 @@
     </script>
 </body>
 </html>
+
