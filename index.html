@@ -5,43 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxia 3D</title>
     <style>
-        body { 
-            margin: 0; 
-            overflow: hidden; 
-            background-color: #000; 
-        }
-        canvas { 
-            display: block; 
-        }
+        body { margin: 0; overflow: hidden; background-color: #000; }
+        canvas { display: block; }
     </style>
-    <!-- Servidor oficial de unpkg que no se bloquea en ningún navegador -->
-    <script src="https://unpkg.com"></script>
-    <script src="https://unpkg.com"></script>
+    <!-- Cargamos Three.js desde un script alternativo de respaldo directo -->
+    <script src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body>
     <canvas class="webgl"></canvas>
-    
     <script>
         window.addEventListener('DOMContentLoaded', () => {
+            if (typeof THREE === 'undefined') {
+                console.error("El navegador sigue bloqueando las librerías externas.");
+                return;
+            }
             const canvas = document.querySelector('canvas.webgl');
             const scene = new THREE.Scene();
 
             const parameters = {
-                count: 70000,           
-                size: 0.01,             
-                radius: 5,              
-                branches: 3,            
-                spin: 1,                
-                randomness: 0.5,        
-                randomnessPower: 4,     
-                insideColor: '#ff6030', 
-                outsideColor: '#1b3984' 
+                count: 70000, size: 0.01, radius: 5, branches: 3, spin: 1,
+                randomness: 0.5, randomnessPower: 4, insideColor: '#ff6030', outsideColor: '#1b3984'
             };
 
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(parameters.count * 3);
             const colors = new Float32Array(parameters.count * 3);
-
             const colorInside = new THREE.Color(parameters.insideColor);
             const colorOutside = new THREE.Color(parameters.outsideColor);
 
@@ -55,14 +44,12 @@
                 const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
                 const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius;
 
-                positions[i3    ] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+                positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
                 positions[i3 + 1] = randomY;
                 positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
 
-                const mixedColor = colorInside.clone();
-                mixedColor.lerp(colorOutside, radius / parameters.radius);
-
-                colors[i3    ] = mixedColor.r;
+                const mixedColor = colorInside.clone().lerp(colorOutside, radius / parameters.radius);
+                colors[i3] = mixedColor.r;
                 colors[i3 + 1] = mixedColor.g;
                 colors[i3 + 2] = mixedColor.b;
             }
@@ -71,11 +58,8 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
-                size: parameters.size,
-                sizeAttenuation: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-                vertexColors: true
+                size: parameters.size, sizeAttenuation: true, depthWrite: false,
+                blending: THREE.AdditiveBlending, vertexColors: true
             });
 
             const galaxy = new THREE.Points(geometry, material);
@@ -94,22 +78,17 @@
             controls.enableDamping = true;
 
             const clock = new THREE.Clock();
-
             const tick = () => {
-                const elapsedTime = clock.getElapsedTime();
-                galaxy.rotation.y = elapsedTime * 0.05; 
+                galaxy.rotation.y = clock.getElapsedTime() * 0.05; 
                 controls.update();
                 renderer.render(scene, camera);
                 window.requestAnimationFrame(tick);
             };
-
             tick();
 
             window.addEventListener('resize', () => {
-                sizes.width = window.innerWidth;
-                sizes.height = window.innerHeight;
-                camera.aspect = sizes.width / sizes.height;
-                camera.updateProjectionMatrix();
+                sizes.width = window.innerWidth; sizes.height = window.innerHeight;
+                camera.aspect = sizes.width / sizes.height; camera.updateProjectionMatrix();
                 renderer.setSize(sizes.width, sizes.height);
             });
         });
