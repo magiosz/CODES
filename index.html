@@ -14,15 +14,14 @@
             display: block; 
         }
     </style>
-    <!-- Cargamos las librerías oficiales desde internet de forma segura -->
-    <script src="https://cloudflare.com"></script>
-    <script src="https://cloudflare.com"></script>
+    <!-- Cargamos tus librerías locales subidas a tu propio servidor (Sin bloqueos de internet) -->
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
 </head>
 <body>
     <canvas class="webgl"></canvas>
     
     <script>
-        // Todo tu código de JavaScript unificado aquí adentro para evitar problemas de orden
         window.addEventListener('DOMContentLoaded', () => {
             const canvas = document.querySelector('canvas.webgl');
             const scene = new THREE.Scene();
